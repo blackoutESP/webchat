@@ -1,0 +1,30 @@
+{
+  "name": "webchat",
+  "version": "0.0.1",
+  "description": "Websocket webchat",
+  "main": "index.js",
+  "scripts": {
+    "start": "",
+    "dev": "NODE_ENV=dev DEBUG=* nodemon ./index",
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blackoutESP/webchat.git"
+  },
+  "author": "Alex Algar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blackoutESP/webchat/issues"
+  },
+  "homepage": "https://github.com/blackoutESP/webchat#readme",
+  "dependencies": {
+    "bunyan": "^1.8.14",
+    "express": "^4.17.1",
+    "mongodb": "^3.6.0",
+    "ws": "^7.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}

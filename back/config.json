@@ -1,0 +1,14 @@
+{
+    "http": {
+        "ip": "192.168.1.100",
+        "port": 3000
+    },
+    "mongo": {
+        "url": "mongodb://127.0.0.1:27017",
+        "db": "chat",
+        "collection": "chat"
+    },
+    "jwt": {
+        "api_key": "8ae2f249-0f2a-49a8-aa04-2ea566782df8"
+    }
+}
