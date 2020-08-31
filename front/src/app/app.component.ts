@@ -44,6 +44,7 @@ export class AppComponent implements OnInit {
       };
       this.ws.send(JSON.stringify(this.wsMessage));
     } else {
+      this.message = event.target.value;
       this.typing = false;
       this.wsMessage = {
         nickname: this.nickname,
@@ -51,6 +52,7 @@ export class AppComponent implements OnInit {
         timestamp: null,
         typing: this.typing
       };
+      this.ws.send(JSON.stringify(this.wsMessage));
     }
   }
 
