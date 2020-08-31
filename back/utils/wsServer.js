@@ -42,36 +42,36 @@ webSocketServer.on('connection', async(ws, request)=>{
         
         ws.on('message', async(message)=>{
             let data = JSON.parse(message);
-            console.log(data);
-            // switch(data.typing) {
-            //     case 'true':
-            //         wssMessage.nickname = data.nickname;
-            //         wssMessage.timestamp = new Date();
-            //         wssMessage.message = `${wssMessage.nickname} is typing...`;
-            //         wssMessage.typing = true;
-            //         wssMessage.host = request.headers.host;
-            //         broadcast(wssMessage);
-            //         console.log(data);
-            //         break;
-            //         case 'false':
-            //             wssMessage.nickname = data.nickname;
-            //             wssMessage.timestamp = new Date();
-            //             wssMessage.message = `${wssMessage.nickname} stopped typing...`;
-            //             wssMessage.typing = false;
-            //             wssMessage.host = request.headers.host;
-            //             broadcast(wssMessage);
-            //             console.log(data);
-            //             default:
-            //                 wssMessage.nickname = data.nickname;
-            //                 wssMessage.timestamp = new Date();
-            //                 wssMessage.message = data.message;
-            //                 wssMessage.typing = false;
-            //                 wssMessage.host = request.headers.host;
-            //                 broadcast(wssMessage);
-            //                 console.log(data);
+            // console.log(data);
+            switch(data.typing) {
+                case 'true':
+                    wssMessage.nickname = data.nickname;
+                    wssMessage.timestamp = new Date();
+                    wssMessage.message = `${wssMessage.nickname} is typing...`;
+                    wssMessage.typing = true;
+                    wssMessage.host = request.headers.host;
+                    broadcast(wssMessage);
+                    console.log(data);
+                    break;
+                    case 'false':
+                        wssMessage.nickname = data.nickname;
+                        wssMessage.timestamp = new Date();
+                        wssMessage.message = `${wssMessage.nickname} stopped typing...`;
+                        wssMessage.typing = false;
+                        wssMessage.host = request.headers.host;
+                        broadcast(wssMessage);
+                        console.log(data);
+                        default:
+                            wssMessage.nickname = data.nickname;
+                            wssMessage.timestamp = new Date();
+                            wssMessage.message = data.message;
+                            wssMessage.typing = false;
+                            wssMessage.host = request.headers.host;
+                            broadcast(wssMessage);
+                            console.log(data);
                         
                         
-            // }
+            }
         }); 
         ws.on('close', async()=>{
             clients = clients.filter(client => client !== ws);
