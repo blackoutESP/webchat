@@ -38,37 +38,37 @@ webSocketServer.on('connection', async(ws, request)=>{
 
     if(ws.readyState === 1 && ws.OPEN){
         
-        clients.push(ws);
+        clients.push({ws, ip: request.headers.host});
+        broadcastClients(clients);
         
         ws.on('message', async(message)=>{
             let data = JSON.parse(message);
-            // console.log(data);
             switch(data.typing) {
                 case 'true':
+                    console.log(data);
                     wssMessage.nickname = data.nickname;
-                    wssMessage.timestamp = new Date();
+                    wssMessage.timestamp = new Date().toString().split(' ')[4];
                     wssMessage.message = `${wssMessage.nickname} is typing...`;
                     wssMessage.typing = true;
                     wssMessage.host = request.headers.host;
                     broadcast(wssMessage);
-                    console.log(data);
                     break;
                     case 'false':
+                        console.log(data);
                         wssMessage.nickname = data.nickname;
-                        wssMessage.timestamp = new Date();
+                        wssMessage.timestamp = new Date().toString().split(' ')[4];
                         wssMessage.message = `${wssMessage.nickname} stopped typing...`;
                         wssMessage.typing = false;
                         wssMessage.host = request.headers.host;
                         broadcast(wssMessage);
-                        console.log(data);
                         default:
+                            console.log(data);
                             wssMessage.nickname = data.nickname;
-                            wssMessage.timestamp = new Date();
+                            wssMessage.timestamp = new Date().toString().split(' ')[4];
                             wssMessage.message = data.message;
                             wssMessage.typing = false;
                             wssMessage.host = request.headers.host;
                             broadcast(wssMessage);
-                            console.log(data);
                         
                         
             }
@@ -80,10 +80,24 @@ webSocketServer.on('connection', async(ws, request)=>{
     }
 });
 
+const broadcastClients = (clients) => {
+    let ips = [];
+    clients.forEach(client => {
+        if(client.ws.readyState === 1) {
+            ips.push(client.ip);
+        }
+    });
+    clients.forEach(client => {
+        if(client.ws.readyState === 1) {
+            client.ws.send(JSON.stringify(ips));
+        }
+    });
+};
+
 const broadcast = (wssMessage) => {
     clients.forEach(client => {
-        if (client.readyState === 1){
-            client.send(JSON.stringify(wssMessage));
+        if (client.ws.readyState === 1){
+            client.ws.send(JSON.stringify(wssMessage));
         }
     });
 };

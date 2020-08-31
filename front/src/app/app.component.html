@@ -14,7 +14,9 @@
       </ul>
     </div>
     <div class="users">
-
+      <ul>
+        <li *ngFor="let ip of ips">{{ip}}</li>
+      </ul>
     </div>
     <div class="input">
       <input type="text" (keydown)="onKey($event)" (keyup)="notify()" (keyup.enter)="sendMessage()">

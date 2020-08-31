@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   message = '';
   timestamp = '';
   typing: boolean;
+  ips = [];
   constructor() {
 
   }
@@ -28,7 +29,12 @@ export class AppComponent implements OnInit {
       console.error(e);
     }
     this.ws.onmessage = (msg) => {
-      console.log(msg.data);
+      let data = JSON.parse(msg.data);
+      if (!data.message) {
+        data.forEach(ip => {
+          this.ips.push(ip);
+        });
+      }
     };
   }
 
