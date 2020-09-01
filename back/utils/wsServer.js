@@ -34,16 +34,13 @@ let wssMessage = {
     host: String
 };
 
-webSocketServer.on('connection', async(ws, request)=>{
-
+webSocketServer.on('connection', (ws, request) => {
     if(ws.readyState === 1 && ws.OPEN){
-        
         let filtered = clients.filter(client => client.ws === ws);
         if(filtered.length === 0) {
             clients.push({ws, ip: request.headers.host});
         }
         broadcastClients(clients);
-        
         ws.on('message', async(message)=>{
             let data = JSON.parse(message);
             switch(data.typing) {
@@ -72,11 +69,9 @@ webSocketServer.on('connection', async(ws, request)=>{
                             wssMessage.typing = false;
                             wssMessage.host = request.headers.host;
                             broadcast(wssMessage);
-                        
-                        
             }
         }); 
-        ws.on('close', async()=>{
+        ws.on('close', () => {
             clients = clients.filter(client => client.ws !== ws);
             console.log(`${request.headers.host} disconnected.`);
             broadcastClients(clients);
