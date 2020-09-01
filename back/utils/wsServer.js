@@ -38,7 +38,10 @@ webSocketServer.on('connection', async(ws, request)=>{
 
     if(ws.readyState === 1 && ws.OPEN){
         
-        clients.push({ws, ip: request.headers.host});
+        let filtered = clients.filter(client => client.ws === ws);
+        if(filtered.length === 0) {
+            clients.push({ws, ip: request.headers.host});
+        }
         broadcastClients(clients);
         
         ws.on('message', async(message)=>{
@@ -74,8 +77,9 @@ webSocketServer.on('connection', async(ws, request)=>{
             }
         }); 
         ws.on('close', async()=>{
-            clients = clients.filter(client => client !== ws);
+            clients = clients.filter(client => client.ws !== ws);
             console.log(`${request.headers.host} disconnected.`);
+            broadcastClients(clients);
         });
     }
 });
