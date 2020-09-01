@@ -15,7 +15,7 @@
     </div>
     <div class="users">
       <ul>
-        <li *ngFor="let ip of ips">{{ip}}</li>
+        <li *ngFor="let ip of ips"><a (click)="openWs(ip)">{{ip}}</a></li>
       </ul>
     </div>
     <div class="input">

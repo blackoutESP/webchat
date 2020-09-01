@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
     this.ws.onmessage = (msg) => {
       let data = JSON.parse(msg.data);
       if (!data.message) {
+        this.ips = [];
         data.forEach(ip => {
           this.ips.push(ip);
         });
@@ -86,5 +87,12 @@ export class AppComponent implements OnInit {
 
   setNickname(): void {
     this.nickname = 'Alex'; // prompt('Enter your nickname: ');
+  }
+
+  openWs(ip): void {
+    let webSocket = new WebSocket(`ws://${ip}`);
+    if (webSocket.readyState === 1){
+      webSocket.send(JSON.stringify('test'));
+    }
   }
 }
