@@ -36,34 +36,16 @@ webSocketServer.on('connection', (ws, request) => {
         }
         broadcastClients(clients);
         ws.on('message', async(message)=>{
-            console.log(message);
-            broadcast(message);
-            // switch(message.typing) {
-            //     case 'true':
-            //         wssMessage.nickname = message.nickname;
-            //         wssMessage.timestamp = new Date().toString().split(' ')[4];
-            //         wssMessage.message = `${wssMessage.nickname} is typing...`;
-            //         wssMessage.typing = true;
-            //         wssMessage.host = request.headers.host;
-            //         console.log(wssMessage);
-            //         break;
-            //         case 'false':
-            //             wssMessage.nickname = message.nickname;
-            //             wssMessage.timestamp = new Date().toString().split(' ')[4];
-            //             wssMessage.message = `${wssMessage.nickname} stopped typing...`;
-            //             wssMessage.typing = false;
-            //             wssMessage.host = request.headers.host;
-            //             console.log(wssMessage);
-            //             break;
-            //             default:
-            //                 console.log(wssMessage);
-            //                 wssMessage.nickname = message.nickname;
-            //                 wssMessage.timestamp = new Date().toString().split(' ')[4];
-            //                 wssMessage.message = message.message;
-            //                 wssMessage.typing = false;
-            //                 wssMessage.host = request.headers.host;
-            //                 console.log(wssMessage);
-            // }
+            const data = JSON.parse(message);
+            const targetHost = data.host;
+            clients.forEach(client => {
+                if (client.ip.split(':')[3] === targetHost) {
+                    client.ws.send(JSON.stringify('hello socket'));
+                }
+            });
+            if (!targetHost) {
+                broadcast('Hello all');
+            }
         }); 
         ws.on('close', () => {
             clients = clients.filter(client => client.ws !== ws);
@@ -87,10 +69,10 @@ const broadcastClients = (clients) => {
     });
 };
 
-const broadcast = (wssMessage) => {
+const broadcast = (message) => {
     clients.forEach(client => {
         if (client.ws.readyState === 1){
-            client.ws.send(JSON.stringify(wssMessage));
+            client.ws.send(JSON.stringify(message));
         }
     });
 };

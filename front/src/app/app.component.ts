@@ -63,18 +63,34 @@ export class AppComponent implements OnInit {
         typing: this.typing,
         host: null
       };
-      console.log(this.wssMessage);
+      // if (Object.values(this.wssMessage).length > 0) {
+
+      // }
+      this.openWs().then((socket: WebSocket) => {
+        if (socket.readyState === 1 && socket.OPEN) {
+          socket.send(JSON.stringify(this.wssMessage));
+        }else {
+          console.log('unable to send data');
+        }
+      }).catch(e => console.error(e));
     }
   }
 
-  sendPrivateMsg(ip): void {
-    this.wssMessage.host = ip || null;
-    console.log(this.wssMessage);
-    const webSocket = new WebSocket(`ws://${ip}:8080/`);
-    webSocket.onopen = () => {
-      if (webSocket.readyState === 1 && webSocket.OPEN) {
-        webSocket.send(JSON.stringify(this.wssMessage));
-      }
-    };
+  setIp(ip: string): void {
+    this.ip = ip;
+    this.wssMessage.host = ip;
+  }
+
+  openWs(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const webSocket = new WebSocket(`ws://${this.ip}:8080/`);
+      webSocket.onopen = () => {
+        if (webSocket.readyState === 1 && webSocket.OPEN) {
+          resolve(webSocket);
+        } else {
+          reject(new Error('cannot open ws'));
+        }
+      };
+    });
   }
 }
