@@ -26,7 +26,6 @@ const wsconfig = {
 
 const webSocketServer = new ws.Server(wsconfig, httpServer);
 let clients = [];
-let wssMessage = {};
 
 webSocketServer.on('connection', (ws, request) => {
     if(ws.readyState === 1 && ws.OPEN){
@@ -39,6 +38,7 @@ webSocketServer.on('connection', (ws, request) => {
             const data = JSON.parse(message);
             const targetHost = data.host;
             clients.forEach(client => {
+                console.log(client.ip);
                 if (client.ip.split(':')[3] === targetHost) {
                     client.ws.send(JSON.stringify(data));
                 }
