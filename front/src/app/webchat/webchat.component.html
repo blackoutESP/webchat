@@ -6,15 +6,15 @@
   </div>
   <div class="users">
     <ul>
-
+      <li *ngFor="let ip of ips"><a (click)="setIp(ip)">{{ip}}</a></li>
     </ul>
   </div>
   <div class="input">
-    <input type="text" name="message" id="message">
+    <input type="text" name="message" id="message" (keyup)="onKey($event)">
   </div>
   <div class="send">
     <button type="submit">
-      <span class="material-icons">
+      <span class="material-icons" title="broadcast" (click)="setIp('')">
         send
       </span>
     </button>
