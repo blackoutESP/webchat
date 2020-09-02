@@ -26,54 +26,48 @@ const wsconfig = {
 
 const webSocketServer = new ws.Server(wsconfig, httpServer);
 let clients = [];
-let wssMessage = {
-    nickname: String,
-    timestamp: Date,
-    message: String,
-    typing: Boolean,
-    host: String
-};
+let wssMessage = {};
 
 webSocketServer.on('connection', (ws, request) => {
     if(ws.readyState === 1 && ws.OPEN){
         let filtered = clients.filter(client => client.ws === ws);
         if(filtered.length === 0) {
-            clients.push({ws, ip: request.headers.host});
+            clients.push({ws, ip: request.connection.remoteAddress});
         }
         broadcastClients(clients);
         ws.on('message', async(message)=>{
-            let data = JSON.parse(message);
-            switch(data.typing) {
-                case 'true':
-                    console.log(data);
-                    wssMessage.nickname = data.nickname;
-                    wssMessage.timestamp = new Date().toString().split(' ')[4];
-                    wssMessage.message = `${wssMessage.nickname} is typing...`;
-                    wssMessage.typing = true;
-                    wssMessage.host = request.headers.host;
-                    broadcast(wssMessage);
-                    break;
-                    case 'false':
-                        console.log(data);
-                        wssMessage.nickname = data.nickname;
-                        wssMessage.timestamp = new Date().toString().split(' ')[4];
-                        wssMessage.message = `${wssMessage.nickname} stopped typing...`;
-                        wssMessage.typing = false;
-                        wssMessage.host = request.headers.host;
-                        broadcast(wssMessage);
-                        default:
-                            console.log(data);
-                            wssMessage.nickname = data.nickname;
-                            wssMessage.timestamp = new Date().toString().split(' ')[4];
-                            wssMessage.message = data.message;
-                            wssMessage.typing = false;
-                            wssMessage.host = request.headers.host;
-                            broadcast(wssMessage);
-            }
+            console.log(message);
+            broadcast(message);
+            // switch(message.typing) {
+            //     case 'true':
+            //         wssMessage.nickname = message.nickname;
+            //         wssMessage.timestamp = new Date().toString().split(' ')[4];
+            //         wssMessage.message = `${wssMessage.nickname} is typing...`;
+            //         wssMessage.typing = true;
+            //         wssMessage.host = request.headers.host;
+            //         console.log(wssMessage);
+            //         break;
+            //         case 'false':
+            //             wssMessage.nickname = message.nickname;
+            //             wssMessage.timestamp = new Date().toString().split(' ')[4];
+            //             wssMessage.message = `${wssMessage.nickname} stopped typing...`;
+            //             wssMessage.typing = false;
+            //             wssMessage.host = request.headers.host;
+            //             console.log(wssMessage);
+            //             break;
+            //             default:
+            //                 console.log(wssMessage);
+            //                 wssMessage.nickname = message.nickname;
+            //                 wssMessage.timestamp = new Date().toString().split(' ')[4];
+            //                 wssMessage.message = message.message;
+            //                 wssMessage.typing = false;
+            //                 wssMessage.host = request.headers.host;
+            //                 console.log(wssMessage);
+            // }
         }); 
         ws.on('close', () => {
             clients = clients.filter(client => client.ws !== ws);
-            console.log(`${request.headers.host} disconnected.`);
+            // console.log(`${request.connection.remoteAddress} disconnected.`);
             broadcastClients(clients);
         });
     }

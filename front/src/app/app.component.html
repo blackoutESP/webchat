@@ -15,14 +15,14 @@
     </div>
     <div class="users">
       <ul>
-        <li *ngFor="let ip of ips"><a (click)="openWs(ip)">{{ip}}</a></li>
+        <li *ngFor="let ip of ips"><a (click)="sendPrivateMsg(ip)">{{ip}}</a></li>
       </ul>
     </div>
     <div class="input">
-      <input type="text" (keydown)="onKey($event)" (keyup)="notify()" (keyup.enter)="sendMessage()">
+      <input type="text" (keydown)="onKey($event)">
     </div>
     <div class="send">
-      <button title="Send Message" (click)="sendMessage()">
+      <button title="Send Message">
         <span class="material-icons">send</span>
       </button>
     </div>

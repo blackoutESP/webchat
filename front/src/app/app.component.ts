@@ -9,7 +9,7 @@ export class AppComponent implements OnInit {
 
   title = 'WebChat';
   ws: WebSocket;
-  wsMessage: object;
+  wssMessage: any;
   timer = 0;
   interval = 1000;
   nickname = '';
@@ -17,82 +17,64 @@ export class AppComponent implements OnInit {
   timestamp = '';
   typing: boolean;
   ips = [];
+  ip: string;
   constructor() {
 
   }
 
   ngOnInit(): void {
     this.setNickname();
-    try {
-      this.ws = new WebSocket('ws://127.0.0.1:8080');
+    try{
+      this.ws = new WebSocket('ws://127.0.0.1:8080/');
     }catch(e){
       console.error(e);
+    }finally{
+      this.ws.onmessage = (message) => {
+        if (typeof JSON.parse(message.data) === 'object') {
+          this.ips = [];
+          const data = JSON.parse(message.data);
+          for (let i = 0; i < data.length; i++){
+            this.ips.push(data[i].split(':')[3]);
+          }
+        } else {
+          console.log(JSON.parse(message.data));
+        }
+      };
     }
-    this.ws.onmessage = (msg) => {
-      let data = JSON.parse(msg.data);
-      if (!data.message) {
-        this.ips = [];
-        data.forEach(ip => {
-          this.ips.push(ip);
-        });
-      }
-    };
+  }
+
+  setNickname(): void {
+    this.nickname = 'Alex';
   }
 
   onKey(event): void {
     if (event.keyCode !== 13) {
-      this.message = event.target.value;
+      this.timestamp = new Date().toString().split(' ')[4];
+      this.message = `${this.nickname} is typping...`;
       this.typing = true;
-      this.wsMessage = {
-        nickname: this.nickname,
-        message: `${this.nickname} is typing...`,
-        timestamp: null,
-        typing: this.typing
-      };
-      this.ws.send(JSON.stringify(this.wsMessage));
     } else {
+      this.timestamp = new Date().toString().split(' ')[4];
       this.message = event.target.value;
       this.typing = false;
-      this.wsMessage = {
+      this.wssMessage = {
         nickname: this.nickname,
+        timestamp: this.timestamp,
         message: this.message,
-        timestamp: null,
-        typing: this.typing
+        typing: this.typing,
+        host: null
       };
-      this.ws.send(JSON.stringify(this.wsMessage));
+      console.log(this.wssMessage);
     }
   }
 
-  notify(): void {
-    this.typing = false;
-    this.wsMessage = {
-      nickname: this.nickname,
-      message: `${this.nickname} stopped typing...`,
-      timestamp: null,
-      typing: this.typing
+  sendPrivateMsg(ip): void {
+    this.wssMessage.host = ip || null;
+    console.log(this.wssMessage);
+    const webSocket = new WebSocket(`ws://${ip}:8080/`);
+    webSocket.onopen = () => {
+      if (webSocket.readyState === 1 && webSocket.OPEN) {
+        webSocket.send(JSON.stringify(this.wssMessage));
+      }
     };
-    this.ws.send(JSON.stringify(this.wsMessage));
-  }
-
-  sendMessage(): void {
-    this.timestamp = new Date().toString().split(' ')[4];
-    this.wsMessage = {
-      nickname: this.nickname,
-      message: this.message,
-      timestamp: this.timestamp,
-      typing: this.typing
-    };
-    this.ws.send(JSON.stringify(this.wsMessage));
-  }
-
-  setNickname(): void {
-    this.nickname = 'Alex'; // prompt('Enter your nickname: ');
-  }
-
-  openWs(ip): void {
-    let webSocket = new WebSocket(`ws://${ip}`);
-    if (webSocket.readyState === 1){
-      webSocket.send(JSON.stringify('test'));
-    }
   }
 }
