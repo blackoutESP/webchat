@@ -1,0 +1,37 @@
+.container {
+  display: grid;
+  grid-template-columns: 80% 20%;
+  grid-template-rows: 95% 5%;
+  grid-template-areas: "messages users"
+                        " input send";
+  max-height: 100vh;
+  overflow-y: hidden;
+}
+
+.messages {
+  display: grid;
+  grid-area: messages;
+  border: 1px solid;
+}
+
+.users {
+  display: grid;
+  grid-area: users;
+  border: 1px solid;
+}
+
+.messages ul, .users ul {
+  min-height: 960px;
+}
+
+.input {
+  display: grid;
+  grid-area: input;
+  border: 1px solid;
+}
+
+.send {
+  display: grid;
+  grid-area: send;
+  border: 1px solid;
+}
