@@ -40,11 +40,11 @@ webSocketServer.on('connection', (ws, request) => {
             const targetHost = data.host;
             clients.forEach(client => {
                 if (client.ip.split(':')[3] === targetHost) {
-                    client.ws.send(JSON.stringify('hello socket'));
+                    client.ws.send(JSON.stringify(data));
                 }
             });
             if (!targetHost) {
-                broadcast('Hello all');
+                broadcast(message);
             }
         }); 
         ws.on('close', () => {
