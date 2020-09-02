@@ -14,9 +14,11 @@ export class WebchatComponent implements OnInit {
   timestamp: string;
   message: string;
   host: string;
+  messages = [];
   constructor() { }
 
   ngOnInit(): void {
+    this.setNickname();
     this.webSocket = new WebSocket('ws://127.0.0.1:8080/');
     this.webSocket.onopen = () => {
       if (this.webSocket.readyState === 1 && this.webSocket.OPEN) {
@@ -29,7 +31,9 @@ export class WebchatComponent implements OnInit {
             }
           }
           if (typeof data === 'string') {
-            console.log(data);
+            const msg = JSON.parse(data);
+            this.messages.push(msg);
+            console.log(this.messages);
           }
         };
       }
@@ -37,7 +41,7 @@ export class WebchatComponent implements OnInit {
   }
 
   setNickname(): void {
-    this.nickname = prompt('Enter your nickname: ');
+    this.nickname = prompt('Enter your nickname');
   }
 
   setIp(ip: string): void {
