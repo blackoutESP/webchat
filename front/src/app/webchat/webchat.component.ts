@@ -34,12 +34,6 @@ export class WebchatComponent implements OnInit {
             console.log(JSON.parse(data.message));
             this.messages.push(JSON.parse(data.message));
             console.log(this.messages);
-            // if (typeof data.message === 'string') {
-            //   this.messages.push(JSON.parse(data.message));
-            // }else{
-            //   this.messages.push(JSON.parse(data));
-            // }
-            // console.log(this.messages);
           }
         };
       }
