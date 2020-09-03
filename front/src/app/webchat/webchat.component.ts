@@ -15,6 +15,7 @@ export class WebchatComponent implements OnInit {
   message: string;
   host: string;
   messages = [];
+  incomingMessage: object;
   constructor() { }
 
   ngOnInit(): void {
@@ -24,15 +25,14 @@ export class WebchatComponent implements OnInit {
       if (this.webSocket.readyState === 1 && this.webSocket.OPEN) {
         this.webSocket.onmessage = (message) => {
           const data = JSON.parse(message.data);
-          if (typeof data === 'object') {
+          if (data.ips) {
             this.ips = [];
-            for (let i = 0; i < data.length; i++){
-              this.ips.push(data[i].split(':')[3]);
+            for (let i = 0; i < data.ips.length; i++) {
+              this.ips.push(data.ips[i].split(':')[3]);
             }
           }
-          if (typeof data === 'string') {
-            const msg = JSON.parse(data);
-            this.messages.push(msg);
+          if (data.message) {
+            this.messages.push(JSON.parse(data.message));
             console.log(this.messages);
           }
         };

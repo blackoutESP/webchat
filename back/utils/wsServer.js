@@ -64,7 +64,7 @@ const broadcastClients = (clients) => {
     });
     clients.forEach(client => {
         if(client.ws.readyState === 1) {
-            client.ws.send(JSON.stringify(ips));
+            client.ws.send(JSON.stringify({ips}));
         }
     });
 };
@@ -72,7 +72,7 @@ const broadcastClients = (clients) => {
 const broadcast = (message) => {
     clients.forEach(client => {
         if (client.ws.readyState === 1){
-            client.ws.send(JSON.stringify(message));
+            client.ws.send(JSON.stringify({message}));
         }
     });
 };
