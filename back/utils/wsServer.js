@@ -48,7 +48,6 @@ webSocketServer.on('connection', (ws, request) => {
         }); 
         ws.on('close', () => {
             clients = clients.filter(client => client.ws !== ws);
-            // console.log(`${request.connection.remoteAddress} disconnected.`);
             broadcastClients(clients);
         });
     }
