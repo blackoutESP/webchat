@@ -38,7 +38,6 @@ webSocketServer.on('connection', (ws, request) => {
             const data = JSON.parse(message);
             const targetHost = data.host;
             clients.forEach(client => {
-                console.log(client.ip);
                 if (client.ip.split(':')[3] === targetHost) {
                     client.ws.send(JSON.stringify(data));
                 }
@@ -49,7 +48,6 @@ webSocketServer.on('connection', (ws, request) => {
         }); 
         ws.on('close', () => {
             clients = clients.filter(client => client.ws !== ws);
-            // console.log(`${request.connection.remoteAddress} disconnected.`);
             broadcastClients(clients);
         });
     }
@@ -64,7 +62,7 @@ const broadcastClients = (clients) => {
     });
     clients.forEach(client => {
         if(client.ws.readyState === 1) {
-            client.ws.send(JSON.stringify(ips));
+            client.ws.send(JSON.stringify({ips}));
         }
     });
 };
@@ -72,7 +70,7 @@ const broadcastClients = (clients) => {
 const broadcast = (message) => {
     clients.forEach(client => {
         if (client.ws.readyState === 1){
-            client.ws.send(JSON.stringify(message));
+            client.ws.send(JSON.stringify({message}));
         }
     });
 };
