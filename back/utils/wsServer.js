@@ -38,7 +38,6 @@ webSocketServer.on('connection', (ws, request) => {
             const data = JSON.parse(message);
             const targetHost = data.host;
             clients.forEach(client => {
-                console.log(client.ip);
                 if (client.ip.split(':')[3] === targetHost) {
                     client.ws.send(JSON.stringify(data));
                 }
