@@ -20,6 +20,10 @@ export class WebchatComponent implements OnInit {
 
   ngOnInit(): void {
     this.setNickname();
+    this.connect();
+  }
+
+  connect(): void {
     this.webSocket = new WebSocket('ws://192.168.1.42:8080/');
     this.webSocket.onopen = () => {
       if (this.webSocket.readyState === 1 && this.webSocket.OPEN) {
@@ -38,6 +42,14 @@ export class WebchatComponent implements OnInit {
           }
         };
       }
+    };
+    this.webSocket.onclose = (event) => {
+      console.log(`Socket closed. Reason: ${event.reason}`);
+      setTimeout(() => { this.connect() }, 1000);
+    };
+    this.webSocket.onerror = (error) => {
+        console.log(`Error: ${error}`);
+        this.webSocket.close();
     };
   }
 
