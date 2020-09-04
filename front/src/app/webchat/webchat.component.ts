@@ -77,14 +77,14 @@ export class WebchatComponent implements OnInit {
     this.messageInput.nativeElement.value = '';
     if (wsMessage.host !== '') {
       const li = document.createElement('li');
-      const t = document.createTextNode(`(${wsMessage.timestamp}) `);
-      const n = document.createTextNode(`${wsMessage.nickname}: `);
-      const m = document.createTextNode(wsMessage.message);
-      const h = document.createTextNode(` [${wsMessage.host}]`);
+      const t = document.createTextNode(` (${wsMessage.timestamp}) `);
+      const n = document.createTextNode(` ${wsMessage.nickname}: `);
+      const m = document.createTextNode(` ${wsMessage.message} `);
+      const h = document.createTextNode(` [ destination: ${wsMessage.host} ]`);
+      li.appendChild(h);
       li.appendChild(t);
       li.appendChild(n);
       li.appendChild(m);
-      li.appendChild(h);
       document.querySelector('#messagesList').appendChild(li);
     }
   }
