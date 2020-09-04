@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-webchat',
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WebchatComponent implements OnInit {
 
+  @ViewChild('message') messageInput: ElementRef;
   webSocket: WebSocket;
   ips = [];
   ip: string;
@@ -73,6 +74,19 @@ export class WebchatComponent implements OnInit {
 
   sendMessage(wsMessage): void {
     this.webSocket.send(JSON.stringify(wsMessage));
+    this.messageInput.nativeElement.value = '';
+    if (wsMessage.host !== '') {
+      const li = document.createElement('li');
+      const t = document.createTextNode(`(${wsMessage.timestamp}) `);
+      const n = document.createTextNode(`${wsMessage.nickname}: `);
+      const m = document.createTextNode(wsMessage.message);
+      const h = document.createTextNode(` [${wsMessage.host}]`);
+      li.appendChild(t);
+      li.appendChild(n);
+      li.appendChild(m);
+      li.appendChild(h);
+      document.querySelector('#messagesList').appendChild(li);
+    }
   }
 
 }

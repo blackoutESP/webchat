@@ -1,6 +1,6 @@
 <div class="container">
   <div class="messages">
-    <ul>
+    <ul id="messagesList">
       <li *ngFor="let msg of messages; let i = index">({{msg.timestamp}}) {{msg.nickname}}: {{msg.message}}</li>
     </ul>
   </div>
@@ -10,7 +10,7 @@
     </ul>
   </div>
   <div class="input">
-    <input type="text" name="message" id="message" (keyup)="onKey($event)">
+    <input type="text" #message name="message" id="message" (keyup)="onKey($event)">
   </div>
   <div class="send">
     <button type="button">
