@@ -1,22 +1,19 @@
 <div class="container">
   <div class="messages">
-    <ul id="messagesList">
-      <li *ngFor="let msg of messages; let i = index">({{msg.timestamp}}) {{msg.nickname}}: {{msg.message}}</li>
-    </ul>
-  </div>
-  <div class="users">
-    <ul>
-      <li *ngFor="let ip of ips"><a (click)="setIp(ip)">{{ip}}</a></li>
-    </ul>
+    <mat-tab-group mat-align-tabs="center" (selectedTabChange)="setIp($event)">
+      <mat-tab label="Room">
+        <ul>
+          <li *ngFor="let msg of messages; let i = index">({{msg.timestamp}}) {{msg.nickname}}: {{msg.message}}</li>
+        </ul>
+      </mat-tab>
+      <mat-tab *ngFor="let ip of ips" [label]="ip">
+        <ul>
+          <li *ngFor="let msg of privateMessages">({{msg.timestamp}}) {{msg.nickname}}: {{msg.message}}</li>
+        </ul>
+      </mat-tab>
+    </mat-tab-group>
   </div>
   <div class="input">
     <input type="text" #message name="message" id="message" (keyup)="onKey($event)">
-  </div>
-  <div class="send">
-    <button type="button">
-      <span class="material-icons" title="broadcast" (click)="setIp('')">
-        send
-      </span>
-    </button>
   </div>
 </div>

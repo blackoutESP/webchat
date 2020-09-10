@@ -1,21 +1,24 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-webchat',
   templateUrl: './webchat.component.html',
-  styleUrls: ['./webchat.component.css']
+  styleUrls: ['./webchat.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class WebchatComponent implements OnInit {
 
   @ViewChild('message') messageInput: ElementRef;
   webSocket: WebSocket;
   ips = [];
+  localAddress: string;
   ip: string;
   nickname: string;
   timestamp: string;
   message: string;
   host: string;
   messages = [];
+  privateMessages = [];
   constructor() { }
 
   ngOnInit(): void {
@@ -33,12 +36,17 @@ export class WebchatComponent implements OnInit {
             this.ips = [];
             for (let i = 0; i < data.ips.length; i++) {
               this.ips.push(data.ips[i].split(':')[3]);
+              this.localAddress = this.ips[this.ips.length - 1];
             }
           }
           if (data.message) {
-            console.log(JSON.parse(data.message));
-            this.messages.push(JSON.parse(data.message));
-            console.log(this.messages);
+            const msg = JSON.parse(data.message);
+            if (msg.host === this.localAddress) {
+              this.privateMessages.push(msg);
+              console.log(this.privateMessages);
+            }else {
+              this.messages.push(msg);
+            }
           }
         };
       }
@@ -54,15 +62,11 @@ export class WebchatComponent implements OnInit {
   }
 
   setNickname(): void {
-    this.nickname = prompt('Enter your nickname');
+    this.nickname = prompt('Nickname: ');
   }
 
-  setIp(ip: string): void {
-    this.ip = ip || '';
-  }
-
-  buildUsersList(): void {
-
+  setIp(event): void {
+    this.ip = this.ips[event.index - 1] || '';
   }
 
   onKey(event): void {
@@ -88,16 +92,16 @@ export class WebchatComponent implements OnInit {
     this.webSocket.send(JSON.stringify(wsMessage));
     this.messageInput.nativeElement.value = '';
     if (wsMessage.host !== '') {
-      const li = document.createElement('li');
-      const t = document.createTextNode(` (${wsMessage.timestamp}) `);
-      const n = document.createTextNode(` ${wsMessage.nickname}: `);
-      const m = document.createTextNode(` ${wsMessage.message} `);
-      const h = document.createTextNode(` [ destination: ${wsMessage.host} ]`);
-      li.appendChild(h);
-      li.appendChild(t);
-      li.appendChild(n);
-      li.appendChild(m);
-      document.querySelector('#messagesList').appendChild(li);
+      // const li = document.createElement('li');
+      // const t = document.createTextNode(` (${wsMessage.timestamp}) `);
+      // const n = document.createTextNode(` ${wsMessage.nickname}: `);
+      // const m = document.createTextNode(` ${wsMessage.message} `);
+      // const h = document.createTextNode(` [ destination: ${wsMessage.host} ]`);
+      // li.appendChild(h);
+      // li.appendChild(t);
+      // li.appendChild(n);
+      // li.appendChild(m);
+      // document.querySelector('#messagesList').appendChild(li);
     }
   }
 
