@@ -1,9 +1,9 @@
 .container {
   display: grid;
-  grid-template-columns: 80% 20%;
+  grid-template-columns: 100%;
   grid-template-rows: 95% 5%;
-  grid-template-areas: "messages users"
-                        " input send";
+  grid-template-areas: "messages"
+                        " input";
   max-height: 100vh;
   overflow-y: hidden;
 }
@@ -11,18 +11,18 @@
 .messages {
   display: grid;
   grid-area: messages;
+  min-height: 960px;
   border: 1px solid;
+}
+
+.mat-tab-label {
+  color: black;
 }
 
 .users {
   display: grid;
   grid-area: users;
   border: 1px solid;
-}
-
-.messages ul, .users ul {
-  min-height: 960px;
-  list-style-type: none;
 }
 
 .input {
