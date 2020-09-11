@@ -29,7 +29,7 @@ export class WebchatComponent implements OnInit {
   }
 
   connect(): void {
-    this.webSocket = new WebSocket('ws://192.168.1.42:8080/');
+    this.webSocket = new WebSocket('ws://192.168.43.202:8080/');
     this.webSocket.onopen = () => {
       if (this.webSocket.readyState === 1 && this.webSocket.OPEN) {
         this.webSocket.onmessage = (message) => {
@@ -99,6 +99,7 @@ export class WebchatComponent implements OnInit {
   sendMessage(wsMessage): void {
     this.webSocket.send(JSON.stringify(wsMessage));
     this.messageInput.nativeElement.value = '';
+    this.messageInput.nativeElement.focus();
   }
 
 }
