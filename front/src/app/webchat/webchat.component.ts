@@ -29,7 +29,7 @@ export class WebchatComponent implements OnInit {
   }
 
   connect(): void {
-    this.webSocket = new WebSocket('ws://192.168.43.202:8080/');
+    this.webSocket = new WebSocket('ws://192.168.1.42:8080/');
     this.webSocket.onopen = () => {
       if (this.webSocket.readyState === 1 && this.webSocket.OPEN) {
         this.webSocket.onmessage = (message) => {
@@ -45,6 +45,7 @@ export class WebchatComponent implements OnInit {
           }
           if (data.message) {
             const msg = JSON.parse(data.message);
+            console.log(msg);
             if (msg.host === this.localAddress) {
               this.privateMessages.push(msg);
             }else {
@@ -89,7 +90,8 @@ export class WebchatComponent implements OnInit {
       nickname: this.nickname,
       timestamp: new Date().toString().split(' ')[4],
       message: msg,
-      host: this.ip || ''
+      host: this.ip || '',
+      localAddress: this.localAddress
     };
     console.log(wsMessage);
     this.sendMessage(wsMessage);
