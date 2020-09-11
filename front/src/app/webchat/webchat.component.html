@@ -2,15 +2,31 @@
   <div class="messages">
     <mat-tab-group mat-align-tabs="center" (selectedTabChange)="setIp($event)">
       <mat-tab label="Room">
-        <ul>
-          <li *ngFor="let msg of messages; let i = index">({{msg.timestamp}}) {{msg.nickname}}: {{msg.message}}</li>
-        </ul>
+        <mat-list>
+          <mat-list-item *ngFor="let msg of messages; let i = index">
+            <mat-icon matListIcon>message</mat-icon>
+            <!-- <h3 matLine>{{msg.nicknamme}}</h3> -->
+            <p matLine>
+              <span>{{msg.timestamp}} &nbsp;&nbsp; </span>
+              <span> {{msg.nickname}}: &nbsp;&nbsp; </span>
+              <span>{{msg.message}}</span>
+            </p>
+          </mat-list-item>
+        </mat-list>
       </mat-tab>
       <ng-container *ngFor="let ip of ips">
         <mat-tab *ngIf="ip !== localAddress" [label]="ip">
-          <ul>
-            <li *ngFor="let msg of privateMessages">({{msg.timestamp}}) {{msg.nickname}}: {{msg.message}}</li>
-          </ul>
+          <mat-list>
+            <mat-list-item *ngFor="let msg of privateMessages; let i = index">
+              <mat-icon matListIcon>message</mat-icon>
+              <!-- <h3 matLine>{{msg.nicknamme}}</h3> -->
+              <p matLine>
+                <span>{{msg.timestamp}} &nbsp;&nbsp; </span>
+                <span> {{msg.nickname}}: &nbsp;&nbsp; </span>
+                <span>{{msg.message}}</span>
+              </p>
+            </mat-list-item>
+          </mat-list>
         </mat-tab>
       </ng-container>
     </mat-tab-group>
