@@ -10,16 +10,18 @@ export class WebchatComponent implements OnInit {
 
   @ViewChild('message') messageInput: ElementRef;
   webSocket: WebSocket;
-  ips = [];
-  localAddress: string;
+  localAddress = '';
   ip: string;
+  ips = [];
   nickname: string;
   timestamp: string;
   message: string;
   host: string;
   messages = [];
   privateMessages = [];
-  constructor() { }
+  constructor() {
+
+  }
 
   ngOnInit(): void {
     this.setNickname();
@@ -36,8 +38,10 @@ export class WebchatComponent implements OnInit {
             this.ips = [];
             for (let i = 0; i < data.ips.length; i++) {
               this.ips.push(data.ips[i].split(':')[3]);
-              this.localAddress = this.ips[this.ips.length - 1];
             }
+          }
+          if (this.localAddress === '') {
+            this.localAddress = this.ips[this.ips.length - 1];
           }
           if (data.message) {
             const msg = JSON.parse(data.message);
@@ -53,11 +57,11 @@ export class WebchatComponent implements OnInit {
     };
     this.webSocket.onclose = (event) => {
       console.log(`Socket closed. Reason: ${event.reason}`);
-      setTimeout(() => { this.connect() }, 1000);
+      setTimeout(() => { this.connect(); }, 1000);
     };
     this.webSocket.onerror = (error) => {
-        console.log(`Error: ${error}`);
-        this.webSocket.close();
+      console.log(`Error: ${error}`);
+      this.webSocket.close();
     };
   }
 
