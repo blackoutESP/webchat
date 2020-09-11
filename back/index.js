@@ -10,7 +10,7 @@ app.use(express.urlencoded({extended: false}));
 
 app.use('/api', indexRouter);
 
-const httpServer = http.createServer(app).listen(config.http.port, '192.168.43.202', ()=>{
+const httpServer = http.createServer(app).listen(config.http.port, '192.168.1.42', ()=>{
     console.log('server listening on *:3000');
 });
 
