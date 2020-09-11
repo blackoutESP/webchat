@@ -6,11 +6,13 @@
           <li *ngFor="let msg of messages; let i = index">({{msg.timestamp}}) {{msg.nickname}}: {{msg.message}}</li>
         </ul>
       </mat-tab>
-      <mat-tab *ngFor="let ip of ips" [label]="ip">
-        <ul>
-          <li *ngFor="let msg of privateMessages">({{msg.timestamp}}) {{msg.nickname}}: {{msg.message}}</li>
-        </ul>
-      </mat-tab>
+      <ng-container *ngFor="let ip of ips">
+        <mat-tab *ngIf="ip !== localAddress" [label]="ip">
+          <ul>
+            <li *ngFor="let msg of privateMessages">({{msg.timestamp}}) {{msg.nickname}}: {{msg.message}}</li>
+          </ul>
+        </mat-tab>
+      </ng-container>
     </mat-tab-group>
   </div>
   <div class="input">
