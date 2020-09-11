@@ -47,7 +47,6 @@ export class WebchatComponent implements OnInit {
             const msg = JSON.parse(data.message);
             if (msg.host === this.localAddress) {
               this.privateMessages.push(msg);
-              console.log(this.privateMessages);
             }else {
               this.messages.push(msg);
             }
