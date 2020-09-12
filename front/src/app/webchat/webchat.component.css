@@ -4,39 +4,33 @@
   grid-template-rows: 95% 5%;
   grid-template-areas: "messages"
                         " input";
+  height: 100vh;
   max-height: 100vh;
-  overflow-y: hidden;
 }
 
 .messages {
   display: grid;
   grid-area: messages;
-  min-height: 960px;
-  border: 1px solid;
+  max-height: 95%;
 }
 
 .mat-tab-label {
   color: black;
 }
 
-.mat-list-icon, .mat-list-text {
-  color: rgba(0, 0, 0, 0.54);
+.scrollable {
+  max-height: 640px;
+  overflow-y: scroll;
 }
 
-.users {
-  display: grid;
-  grid-area: users;
-  border: 1px solid;
+.mat-list-icon, .mat-list-text {
+  color: rgba(0, 0, 0, 0.54);
 }
 
 .input {
   display: grid;
   grid-area: input;
-  border: 1px solid;
-}
-
-.send {
-  display: grid;
-  grid-area: send;
-  border: 1px solid;
+  position: sticky;
+  bottom: 0;
+  height: 100%;
 }
