@@ -8,6 +8,7 @@ import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@an
 })
 export class WebchatComponent implements OnInit {
 
+  @ViewChild('list') messageList: ElementRef;
   @ViewChild('message') messageInput: ElementRef;
   webSocket: WebSocket;
   localAddress = '';
@@ -45,7 +46,6 @@ export class WebchatComponent implements OnInit {
           }
           if (data.message) {
             const msg = JSON.parse(data.message);
-            console.log(msg);
             if (msg.host === this.localAddress) {
               this.privateMessages.push(msg);
             }else {
@@ -93,7 +93,9 @@ export class WebchatComponent implements OnInit {
       host: this.ip || '',
       localAddress: this.localAddress
     };
-    console.log(wsMessage);
+    if (wsMessage.host) {
+      this.privateMessages.push(wsMessage);
+    }
     this.sendMessage(wsMessage);
   }
 
