@@ -34,6 +34,9 @@
     </mat-tab-group>
   </div>
   <div class="input">
-    <input type="text" #message name="message" id="message" (keyup)="onKey($event)">
+    <mat-form-field class="example-full-width">
+      <mat-label>Message</mat-label>
+      <input matInput #message maxlength="256" id="message" color="accent" (keyup)="onKey($event)" placeholder="Type your message...">
+    </mat-form-field>
   </div>
 </div>

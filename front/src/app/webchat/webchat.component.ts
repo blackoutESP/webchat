@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@an
 @Component({
   selector: 'app-webchat',
   templateUrl: './webchat.component.html',
-  styleUrls: ['./webchat.component.css'],
+  styleUrls: ['./webchat.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class WebchatComponent implements OnInit {
