@@ -43,3 +43,7 @@
   max-height: 100%;
   overflow-y: scroll;
 }
+
+.timestamp {
+  float: right;
+}
