@@ -6,50 +6,11 @@ $candy-app-primary: mat-palette($mat-grey, 100);
 $candy-app-accent:  mat-palette($mat-blue-grey, A200, A100, A400);
 $candy-app-warn:    mat-palette($mat-teal, 900);
 
-// $candy-app-red: mat-palette($mat-red);
-// $candy-app-pink: mat-palette($mat-pink);
-// $candy-app-purple: mat-palette($mat-purple);
-// $candy-app-deep-purple: mat-palette($mat-deep-purple);
-// $candy-app-indigo: mat-palette($mat-indigo);
-// $candy-app-blue: mat-palette($mat-blue);
-// $candy-app-light-blue: mat-palette($mat-light-blue);
-// $candy-app-cyan: mat-palette($mat-cyan);
-// $candy-app-teal: mat-palette($mat-teal);
-// $candy-app-green: mat-palette($mat-green);
-// $candy-app-light-green: mat-palette($mat-light-green);
-// $candy-app-lime: mat-palette($mat-lime);
-// $candy-app-yellow: mat-palette($mat-yellow);
-// $candy-app-amber: mat-palette($mat-amber);
-// $candy-app-orange: mat-palette($mat-orange);
-// $candy-app-deep-orange: mat-palette($mat-deep-orange);
-// $candy-app-brown: mat-palette($mat-brown);
-// $candy-app-grey: mat-palette($mat-grey);
-// $candy-app-blue-grey: mat-palette($mat-blue-grey);
-
 $candy-app-theme: mat-dark-theme((
   color: (
     primary: $candy-app-primary,
     accent: $candy-app-accent,
     warn: $candy-app-warn,
-    // red: $candy-app-red,
-    // pink: $candy-app-pink,
-    // purple: $candy-app-purple,
-    // deep-purple: $candy-app-deep-purple,
-    // indigo: $candy-app-indigo,
-    // blue: $candy-app-blue,
-    // light-blue: $candy-app-light-blue,
-    // cyan: $candy-app-cyan,
-    // teal: $candy-app-teal,
-    // green: $candy-app-green,
-    // light-green: $candy-app-light-green,
-    // lime: $candy-app-lime,
-    // yellow: $candy-app-yellow,
-    // amber: $candy-app-amber,
-    // orange: $candy-app-orange,
-    // deep-orange: $candy-app-deep-orange,
-    // brown: $candy-app-brown,
-    // grey: $candy-app-grey,
-    // blue-grey: $candy-app-blue-grey
   )
 ));
 
