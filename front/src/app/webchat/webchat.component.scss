@@ -6,7 +6,7 @@ $warn: map-get($candy-app-theme, warn);
 .container {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 95% 5%;
+  grid-template-rows: 1fr auto;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   grid-template-areas: "messages" "input";
@@ -25,6 +25,28 @@ $warn: map-get($candy-app-theme, warn);
   grid-area: input;
   height: 100%;
   border: 0.5px solid mat-color($warn);
+}
+
+.input .mat-form-field {
+  height: 100%;
+}
+
+.input .mat-form-field .mat-form-field-wrapper {
+  height: 100%;
+  padding: 0;
+}
+
+.input .mat-form-field .mat-form-field-wrapper .mat-form-field-underline{
+  height: 0;
+  color: transparent;
+}
+
+.input .mat-form-field .mat-form-field-wrapper .mat-form-field-underline{
+  display: none;
+}
+
+.mat-form-field.mat-focused .mat-form-field-wrapper .mat-form-field-underline .mat-form-field-ripple{
+  display: none;
 }
 
 .mat-tab-header{
