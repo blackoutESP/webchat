@@ -38,7 +38,7 @@ $warn: map-get($candy-app-theme, warn);
 
 .mat-tab-label-active {
   color: mat-color($warn);
-  background-color: #e3e3e3;
+  background-color: #faf8f8;
 }
 
 .mat-ink-bar {
@@ -62,22 +62,22 @@ $warn: map-get($candy-app-theme, warn);
   float: right;
 }
 
-// .mat-focused .mat-form-field-label {
-//   color: mat-color($warn) !important;
-// }
-
-.mat-form-field-empty.mat-form-field-label {
+.example-full-width .mat-form-field-empty.mat-form-field-label {
   color: mat-color($primary) !important;
 }
 
-.mat-focused.mat-form-field-empty.mat-form-field-label {
+.example-full-width .mat-focused.mat-form-field-empty.mat-form-field-label {
   color: mat-color($accent) !important;
 }
 
-.mat-form-field-underline {
-  color: mat-color($warn) !important;
+.example-full-width .mat-form-field-underline {
+  color: mat-color($accent) !important;
 }
 
-.mat-form-field-ripple {
-  color: mat-color($warn) !important;
+.example-full-width .mat-form-field-ripple {
+  color: mat-color($accent) !important;
+}
+
+.example-full-width .mat-input-element {
+  color: mat-color($accent) !important;
 }
