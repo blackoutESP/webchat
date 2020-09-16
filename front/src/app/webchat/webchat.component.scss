@@ -72,10 +72,13 @@ $warn: map-get($candy-app-theme, warn);
 }
 
 #tab-group .mat-tab-body {
+  height: 100%;
   max-height: 100%;
-  overflow-y: scroll;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+}
+
+.cdk-virtual-scroll-viewport {
+  height: 80vh;
+  color: mat-color($accent) !important;
 }
 
 .timestamp {

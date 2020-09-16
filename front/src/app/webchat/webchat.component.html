@@ -1,34 +1,48 @@
 <div class="container">
   <div class="messages">
     <mat-tab-group id="tab-group" mat-align-tabs="center" (selectedTabChange)="setIp($event)">
-      <mat-tab label="Room">
-        <mat-list>
-          <mat-list-item *ngFor="let msg of messages; let i = index">
-            <mat-icon matListIcon>message</mat-icon>
-            <!-- <h3 matLine>{{msg.nicknamme}}</h3> -->
-            <p matLine>
-              <span> {{msg.nickname}}: &nbsp;&nbsp; </span>
-              <span>{{msg.message}}</span>
-              <span class="timestamp">{{msg.timestamp}} &nbsp;&nbsp; </span>
-            </p>
-          </mat-list-item>
-        </mat-list>
-      </mat-tab>
+      <ng-container>
+        <mat-tab label="Room">
+          <ng-container>
+            <cdk-virtual-scroll-viewport itemSize="48">
+              <ng-container>
+                <mat-list>
+                  <mat-list-item *ngFor="let msg of messages; let i = index">
+                    <mat-icon matListIcon>message</mat-icon>
+                    <!-- <h3 matLine>{{msg.nicknamme}}</h3> -->
+                    <p matLine>
+                      <span> {{msg.nickname}}: &nbsp;&nbsp; </span>
+                      <span>{{msg.message}}</span>
+                      <span class="timestamp">{{msg.timestamp}} &nbsp;&nbsp; </span>
+                    </p>
+                  </mat-list-item>
+                </mat-list>
+              </ng-container>
+            </cdk-virtual-scroll-viewport>
+          </ng-container>
+        </mat-tab>
+      </ng-container>
       <ng-container *ngFor="let ip of ips">
         <mat-tab *ngIf="ip !== localAddress" [label]="ip">
-          <mat-list>
-            <ng-container *ngFor="let msg of privateMessages; let i = index">
-              <mat-list-item *ngIf="msg.localAddress === ip && msg.host === localAddress || msg.localAddress === localAddress">
-                <mat-icon matListIcon>message</mat-icon>
-                <!-- <h3 matLine>{{msg.nicknamme}}</h3> -->
-                <p matLine>
-                  <span> {{msg.nickname}}: &nbsp;&nbsp; </span>
-                  <span>{{msg.message}}</span>
-                  <span class="timestamp">{{msg.timestamp}} &nbsp;&nbsp; </span>
-                </p>
-              </mat-list-item>
-            </ng-container>
-          </mat-list>
+          <ng-container>
+            <cdk-virtual-scroll-viewport itemSize="48" onchange="scroll()">
+              <ng-container>
+                <mat-list>
+                  <ng-container *ngFor="let msg of privateMessages; let i = index">
+                    <mat-list-item *ngIf="msg.localAddress === ip && msg.host === localAddress || msg.localAddress === localAddress">
+                      <mat-icon matListIcon>message</mat-icon>
+                      <!-- <h3 matLine>{{msg.nicknamme}}</h3> -->
+                      <p matLine>
+                        <span> {{msg.nickname}}: &nbsp;&nbsp; </span>
+                        <span>{{msg.message}}</span>
+                        <span class="timestamp">{{msg.timestamp}} &nbsp;&nbsp; </span>
+                      </p>
+                    </mat-list-item>
+                  </ng-container>
+                </mat-list>
+              </ng-container>
+            </cdk-virtual-scroll-viewport>
+          </ng-container>
         </mat-tab>
       </ng-container>
     </mat-tab-group>

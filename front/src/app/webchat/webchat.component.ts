@@ -1,3 +1,4 @@
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 
 @Component({
@@ -8,6 +9,7 @@ import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@an
 })
 export class WebchatComponent implements OnInit {
 
+  @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
   @ViewChild('message') messageInput: ElementRef;
   webSocket: WebSocket;
   localAddress = '';
@@ -51,7 +53,8 @@ export class WebchatComponent implements OnInit {
             }else {
               this.messages.push(msg);
             }
-            document.querySelector('.mat-tab-body-content').scrollTop = document.querySelector('.mat-tab-body-content').scrollHeight;
+            // document.querySelector('.mat-tab-body-content').scrollTop = document.querySelector('.mat-tab-body-content').scrollHeight;
+            this.viewport.scrollTo({bottom: 0});
           }
         };
       }
