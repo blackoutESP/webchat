@@ -54,7 +54,7 @@ export class WebchatComponent implements OnInit {
               this.messages.push(msg);
             }
             // document.querySelector('.mat-tab-body-content').scrollTop = document.querySelector('.mat-tab-body-content').scrollHeight;
-            this.viewport.scrollTo({bottom: 0});
+            this.scroll();
           }
         };
       }
@@ -107,6 +107,10 @@ export class WebchatComponent implements OnInit {
     this.webSocket.send(JSON.stringify(wsMessage));
     this.messageInput.nativeElement.value = '';
     this.messageInput.nativeElement.focus();
+  }
+
+  scroll(): void {
+    this.viewport.scrollTo({bottom: 0});
   }
 
 }

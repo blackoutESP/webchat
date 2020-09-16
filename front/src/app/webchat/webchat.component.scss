@@ -77,7 +77,11 @@ $warn: map-get($candy-app-theme, warn);
 }
 
 .cdk-virtual-scroll-viewport {
-  height: 80vh;
+  height: 85vh;
+}
+
+.mat-list-base .mat-list-item .mat-list-text>*, .mat-list-base .mat-list-option .mat-list-text>*,
+.mat-list-base .mat-list-item .mat-list-icon, .mat-list-base .mat-list-option .mat-list-icon  {
   color: mat-color($accent) !important;
 }
 

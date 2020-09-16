@@ -25,7 +25,7 @@
       <ng-container *ngFor="let ip of ips">
         <mat-tab *ngIf="ip !== localAddress" [label]="ip">
           <ng-container>
-            <cdk-virtual-scroll-viewport itemSize="48" onchange="scroll()">
+            <cdk-virtual-scroll-viewport itemSize="48" class="viewport">
               <ng-container>
                 <mat-list>
                   <ng-container *ngFor="let msg of privateMessages; let i = index">
