@@ -26,6 +26,7 @@ export class WebchatComponent implements OnInit {
   ngOnInit(): void {
     this.setNickname();
     this.connect();
+    this.messageInput.nativeElement.focus();
   }
 
   connect(): void {

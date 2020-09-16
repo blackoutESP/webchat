@@ -67,10 +67,6 @@ $warn: map-get($candy-app-theme, warn);
   background-color: mat-color($warn) !important;
 }
 
-.mat-list-icon, .mat-list-text {
-  color: mat-color($accent);
-}
-
 #tab-group {
   height: 100%;
 }
@@ -78,6 +74,8 @@ $warn: map-get($candy-app-theme, warn);
 #tab-group .mat-tab-body {
   max-height: 100%;
   overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .timestamp {
